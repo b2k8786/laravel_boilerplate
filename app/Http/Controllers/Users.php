@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Users extends BaseController
 {
 
-    function add(Request $request)
+    public function add(Request $request)
     {
         $user = new \App\Models\Users();
 

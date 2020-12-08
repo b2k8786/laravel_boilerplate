@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Stream extends BaseController
 {
 
-    function sse()
+    public function sse()
     {
         // \DB::enableQueryLog();
         session_write_close();
@@ -55,7 +55,7 @@ class Stream extends BaseController
         }
     }
 
-    function main()
+    public function main()
     {
         return view('main');
     }

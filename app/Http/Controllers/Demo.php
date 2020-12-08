@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class Demo extends Controller
 {
-    function info()
+    public function info()
     {
         $a=5;
         phpinfo();
