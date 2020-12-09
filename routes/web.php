@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Demo;
+use App\Http\Controllers\Stream;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,5 @@ Route::get('/', function () {
 });
 
 Route::get('/info', [Demo::class, 'info']);
+Route::get('/dash', [Stream::class, 'main']);
+Route::get('/live', [Stream::class,"sse"]);

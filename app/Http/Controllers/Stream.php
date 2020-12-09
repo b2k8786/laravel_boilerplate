@@ -10,12 +10,13 @@ class Stream extends BaseController
 
     public function sse()
     {
-        // \DB::enableQueryLog();
         session_write_close();
 
         header("Content-Type: text/event-stream");
         header("Cache-Control: no-store");
         header("Access-Control-Allow-Origin: *");
+
+        $eventId = isset($_SERVER["HTTP_LAST_EVENT_ID"]) ? $_SERVER["HTTP_LAST_EVENT_ID"] : 0;
 
         start:
         $users = \App\Models\Users::whereRaw("updated_at >= '" . date('Y-m-d') . "'")
@@ -23,28 +24,27 @@ class Stream extends BaseController
             ->get();
 
         while (true) {
-            set_time_limit(5);
-            if (empty($lastUpdatedAt) && !$users->count())
+            // set_time_limit(5);
+            if (empty($eventId) && !$users->count())
                 goto start;
 
             if ($users->count()) {
-                $lastUpdatedAt = $users[0]->updated_at;
+                // $lastUpdatedAt = $users[0]->updated_at;
+
+                $eventId = $users[$users->count() - 1]->id;
+                echo "id: " . $eventId . "\n";
                 echo "data: " . $users . "\n\n";
             } else {
                 echo ": heartbeat\n\n";
             }
-
-            // $lastQueries = \DB::getQueryLog();
-            // foreach ($lastQueries as $lastQuery) {
-            //     echo $lastQuery['query'].PHP_EOL;
-            // }
 
             ob_flush();
             flush();
             ob_clean();
             sleep(1);
 
-            $users = \App\Models\Users::whereRaw("updated_at > '$lastUpdatedAt'")
+            // $users = \App\Models\Users::whereRaw("updated_at > '$lastUpdatedAt'")
+            $users = \App\Models\Users::whereRaw("id > '$eventId'")
                 ->orderBy('updated_at', 'DESC')
                 ->get();
             if ($users->count())
