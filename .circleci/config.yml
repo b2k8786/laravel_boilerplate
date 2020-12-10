@@ -49,11 +49,11 @@ jobs:
           name: Postman API Tests
           command: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
 
-# workflows:
-#   version: 2
-#   validate-and-deploy:
-#     jobs:
-#       - api_tests
-#       - build:
-#           requires:
-#             - api_tests
+workflows:
+  version: 2
+  validate-and-deploy:
+    jobs:
+      - api_tests
+      - build:
+          requires:
+            - api_tests
