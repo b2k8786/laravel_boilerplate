@@ -20,18 +20,15 @@ class Stream extends BaseController
 
         start:
         $users = \App\Models\Users::whereRaw("updated_at >= '" . date('Y-m-d') . "'")
-            ->orderBy('updated_at', 'DESC')
+            ->orderBy('updated_at', 'ASC')
             ->get();
 
         while (true) {
-            // set_time_limit(5);
             if (empty($eventId) && !$users->count())
                 goto start;
 
             if ($users->count()) {
-                // $lastUpdatedAt = $users[0]->updated_at;
-
-                $eventId = $users[$users->count() - 1]->id;
+                $eventId = $users[$users->count()-1]->id;
                 echo "id: " . $eventId . "\n";
                 echo "data: " . $users . "\n\n";
             } else {
@@ -43,7 +40,6 @@ class Stream extends BaseController
             ob_clean();
             sleep(1);
 
-            // $users = \App\Models\Users::whereRaw("updated_at > '$lastUpdatedAt'")
             $users = \App\Models\Users::whereRaw("id > '$eventId'")
                 ->orderBy('updated_at', 'DESC')
                 ->get();
