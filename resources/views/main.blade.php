@@ -46,11 +46,7 @@
                 jQuery('#data').prepend(
                     `<div class="callout callout-info">
                         <h5>${row.username}</h5>
-                        <p>${row.email} | ${row.contact} | ${moment(row.created_at).format('ddd
-                            
-                            
-                            
-                            DD MMM YYYY')}</p>
+                        <p>${row.email} | ${row.contact} | ${moment(row.created_at).format('ddd DD MMM YYYY')}</p>
                     </div>`
                 );
             });
