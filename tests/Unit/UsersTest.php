@@ -25,7 +25,7 @@ class UsersTest extends TestCase
         $response = $this->post("/api/addUser", $attributes);
         $response->assertStatus(200);
         // Beacuse passwords are converted to md5
-        $attributes['password'] = md5($this->faker->password);
+        $attributes['password'] = md5($attributes['password']);
         $this->assertDatabaseHas('users', $attributes);
     }
 }
