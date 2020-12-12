@@ -14,7 +14,7 @@ class Users extends BaseController
         $user = new \App\Models\Users();
 
         $user->username    = $request->username;
-        $user->password    = $request->password;   //md5($request->password);
+        $user->password    = md5($request->password);
         $user->email       = $request->email;
         $user->contact     = $request->contact;
         $user->verified_at = date('Y-m-d H:i:s');
