@@ -34,11 +34,12 @@ jobs:
           paths:
             - vendor
       - run:
-         name: Heroku Staging Deploy
-         command: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_UAT_APP_NAME.git HEAD:refs/heads/master
-      - run:
           name: migrations
           command: php artisan migrate:refresh --force
+      - run:
+         name: Heroku Staging Deploy
+         command: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_UAT_APP_NAME.git HEAD:refs/heads/master
+  
   api_tests:
     docker:
       - image: svikramjeet/newman
@@ -50,9 +51,7 @@ jobs:
       - run:
           name: Postman API Tests
           command: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
-      - run:
-          name: migrations
-          command: php artisan migrate:refresh --force
+
 workflows:
   version: 2
   validate-and-deploy:
