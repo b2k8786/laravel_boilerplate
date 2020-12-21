@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class Stream extends BaseController
 {
-
     public function sse()
     {
         session_write_close();
