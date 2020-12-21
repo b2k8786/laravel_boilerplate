@@ -30,7 +30,7 @@
 
 @section('page_script')
 <script>
-    var source = new EventSource('<?= url('/') ?>/live');
+    var source = new EventSource(location.origin+'/live');
 
     source.addEventListener('open', function(e) {
         jQuery('#data').html("");
